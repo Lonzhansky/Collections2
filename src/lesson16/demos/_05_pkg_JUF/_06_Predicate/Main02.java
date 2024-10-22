@@ -1,6 +1,7 @@
 package lesson16.demos._05_pkg_JUF._06_Predicate;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.function.Predicate;
@@ -11,11 +12,13 @@ import java.util.function.Predicate;
 public class Main02 {
 
     public static void main(String[] args) {
-        Collection<Integer> values = filter(n -> n > 5, getData());
+        List<Integer> values = filter(n -> n > 5, getData());
         getOutput(values);
     }
 
     private static List<Integer> getData() {
+//        return Arrays.asList(new Integer[]{1, 2, 3, 4, 5, 6, 7, 8});
+
         List<Integer> list = new ArrayList<>();
         list.add(3);
         list.add(14);
@@ -25,9 +28,9 @@ public class Main02 {
         return list;
     }
 
-    private static <T> Collection<T> filter(Predicate<T> predicate,
-                                            Collection<T> listItems) {
-        Collection<T> newList = new ArrayList<>();
+    private static <T> List<T> filter(Predicate<T> predicate,
+                                      List<T> listItems) {
+        List<T> newList = new ArrayList<>();
         for (T item : listItems) {
             if (predicate.test(item)) {
                 newList.add(item);
@@ -36,7 +39,7 @@ public class Main02 {
         return newList;
     }
 
-    private static void getOutput(Collection<Integer> values) {
+    private static void getOutput(List<Integer> values) {
         System.out.println("New list - " + values);
     }
 }
