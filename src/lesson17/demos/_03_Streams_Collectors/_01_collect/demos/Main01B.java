@@ -20,7 +20,6 @@ public class Main01B {
                 .map(Product::getName)
                 .toList(); // <- immutable
 
-
         names.forEach(System.out::println);
     }
 }
