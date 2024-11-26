@@ -2,15 +2,29 @@ package lesson22.app;
 
 import lesson22.app.model.User;
 import lesson22.app.model.UserRole;
+import lesson22.app.observer.AuditService;
+import lesson22.app.observer.EmailService;
 import lesson22.app.repository.LocalRepository;
+import lesson22.app.repository.Repository;
+import lesson22.app.repository.factory.RepositoryFactory;
 import lesson22.app.service.RegistrationService;
 import lesson22.app.validator.UserValidator;
 
 public class Main {
     public static void main(String[] args) {
-        var repository = new LocalRepository();
-        var validator = new UserValidator();
-        var registrationService = new RegistrationService(repository, validator);
+        if (args.length == 0) {
+            System.out.println("Please provide a repository type: -local or -db");
+            return;
+        }
+
+        String repositoryType = args[0];
+        Repository<User> repository = (Repository<User>) RepositoryFactory.getRepository(repositoryType);
+        RegistrationService registrationService = new RegistrationService(repository);
+
+
+        registrationService.addObserver(new EmailService());
+        registrationService.addObserver(new AuditService());
+
 
         User user1 = new User("1", "Alice", "alice@example.com", UserRole.REGULAR);
         User user2 = new User("2", "Bob", "bob@example.com", UserRole.ADMIN);
@@ -45,5 +59,8 @@ public class Main {
 
         System.out.println("\nAll users after operations:");
         registrationService.getAllUsers().forEach(System.out::println);
+
+        registrationService.removeObserver(new EmailService());
+        registrationService.removeObserver(new AuditService());
     }
 }
