@@ -6,6 +6,8 @@ import jakarta.persistence.criteria.Root;
 import lesson30.entity.Order;
 import lesson30.util.HibernateUtil;
 
+import org.hibernate.query.MutationQuery;
+
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
@@ -20,6 +22,39 @@ public class OrderDAO {
             transaction.commit();
         }
     }
+
+//    // HQL
+//    public void addOrder(Order order) {
+//        Transaction transaction = null;
+//        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+//            // Транзакція стартує
+//            transaction = session.beginTransaction();
+//
+//            // HQL-запит для вставки нового замовлення
+//            String hql = "INSERT INTO Order (user, productName, quantity, price) " +
+//                    "VALUES (:user, :productName, :quantity, :price)";
+//
+//            // Створення HQL-запиту
+//            MutationQuery query = session.createMutationQuery(hql);
+//
+//            // Формування конкретних значень для певного іменованого параметра
+//            query.setParameter("user", order.getUser());
+//            query.setParameter("productName", order.getProductName());
+//            query.setParameter("quantity", order.getQuantity());
+//            query.setParameter("price", order.getPrice());
+//
+//            // Виконання HQL-запиту
+//            query.executeUpdate();
+//
+//            // Транзакція виконується
+//            transaction.commit();
+//        } catch (Exception e) {
+//            if (transaction != null) {
+//                transaction.rollback(); // Якщо сталася помилка, відкатуємо транзакцію
+//            }
+//            e.printStackTrace();
+//        }
+//    }
 
     // Criteria API
 //    public void addOrder(Order order) {
