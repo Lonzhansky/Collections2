@@ -59,17 +59,20 @@ public class UserDAOTests {
     @Test
     @Order(2)
     void testInvalidUserCreation() {
-        assertThrows(IllegalArgumentException.class, () -> {
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
             userDAO.save(new User(null, "invalid@example.com"));
         });
+        assertEquals("Invalid user data", exception.getMessage()); // Перевірка повідомлення
 
-        assertThrows(IllegalArgumentException.class, () -> {
+        exception = assertThrows(IllegalArgumentException.class, () -> {
             userDAO.save(new User("Invalid User", ""));
         });
+        assertEquals("Invalid user data", exception.getMessage()); // Перевірка повідомлення
 
-        assertThrows(IllegalArgumentException.class, () -> {
+        exception = assertThrows(IllegalArgumentException.class, () -> {
             userDAO.save(null);
         });
+        assertEquals("Invalid user data", exception.getMessage()); // Перевірка повідомлення
     }
 
     @Test
@@ -83,13 +86,15 @@ public class UserDAOTests {
     @Test
     @Order(4)
     void testFindUserByInvalidEmail() {
-        assertThrows(IllegalArgumentException.class, () -> {
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
             userDAO.findByEmail(null);
         });
+        assertEquals("Email cannot be null or blank", exception.getMessage()); // Перевірка повідомлення
 
-        assertThrows(IllegalArgumentException.class, () -> {
+        exception = assertThrows(IllegalArgumentException.class, () -> {
             userDAO.findByEmail(" ");
         });
+        assertEquals("Email cannot be null or blank", exception.getMessage()); // Перевірка повідомлення
     }
 
     @Test
@@ -117,9 +122,10 @@ public class UserDAOTests {
     @Test
     @Order(7)
     void testDeleteWithInvalidId() {
-        assertThrows(IllegalArgumentException.class, () -> {
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
             userDAO.deleteById(null);
         });
+        assertEquals("ID cannot be null", exception.getMessage()); // Перевірка повідомлення
     }
 
     @Test
